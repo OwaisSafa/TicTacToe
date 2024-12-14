@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" href="data:,">
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Mode Selection Screen -->
+        <div id="mode-selection-screen" class="screen active">
+            <h1 class="game-title">Tic Tac Toe</h1>
+            <div class="mode-buttons">
+                <button onclick="startLocalGame()" class="game-button">Local Game</button>
+                <button onclick="showAIDifficultySelect()" class="game-button">Play vs AI</button>
+                <button onclick="showOnlineOptions()" class="game-button">Play Online</button>
+            </div>
+        </div>
+
+        <!-- AI Difficulty Selection Screen -->
+        <div id="ai-difficulty-screen" class="screen">
+            <h2>Select AI Difficulty</h2>
+            <div class="mode-buttons">
+                <button onclick="startAIGame('easy')" class="game-button">Easy</button>
+                <button onclick="startAIGame('medium')" class="game-button">Medium</button>
+                <button onclick="startAIGame('hard')" class="game-button">Hard</button>
+                <button onclick="showModeSelection()" class="game-button back-button">Back</button>
+            </div>
+        </div>
+
+        <!-- Online Options Screen -->
+        <div id="online-options-screen" class="screen">
+            <h2>Online Game</h2>
+            <div id="online-menu" class="mode-buttons">
+                <button onclick="startOnlineGame('create')" class="game-button">Create Room</button>
+                <button onclick="showJoinRoomOption()" class="game-button">Join Room</button>
+                <button onclick="showModeSelection()" class="game-button back-button">Back</button>
+            </div>
+            <div id="join-room-menu" class="mode-buttons" style="display: none;">
+                <input type="text" id="room-code-input" placeholder="Enter Room Code" class="room-input">
+                <button onclick="startOnlineGame('join')" class="game-button">Join Room</button>
+                <button onclick="showOnlineMenu()" class="game-button back-button">Back</button>
+            </div>
+            <div id="waiting-room" class="mode-buttons" style="display: none;">
+                <div class="room-info">
+                    <h3>Room Created!</h3>
+                    <div class="room-code-display">
+                        <div class="code-label">Room Code:</div>
+                        <div id="room-code" class="code"></div>
+                    </div>
+                </div>
+                <div class="waiting-text">Waiting for opponent to join...</div>
+                <button onclick="showOnlineMenu()" class="game-button back-button">Cancel</button>
+            </div>
+            <div id="room-status" class="room-status"></div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen">
+            <div class="game-header">
+                <span id="game-mode-display" class="game-mode"></span>
+                <span id="game-status" class="game-status"></span>
+            </div>
+            <div class="game-board" id="game-board">
+                <!-- Board cells will be added by JavaScript -->
+            </div>
+            <div class="game-controls">
+                <button onclick="restartGame()" class="game-button">Restart</button>
+                <button onclick="showModeSelection()" class="game-button">Menu</button>
+            </div>
+        </div>
+
+        <!-- Game Result Modal -->
+        <div id="result-modal" class="modal">
+            <div class="modal-content">
+                <h2 id="result-message"></h2>
+                <div class="modal-buttons">
+                    <button onclick="restartGame()" class="game-button" id="play-again-btn">Play Again</button>
+                    <button onclick="showModeSelection()" class="game-button">Menu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/socket.js') }}"></script>
+</body>
+</html>

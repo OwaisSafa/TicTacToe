@@ -1,0 +1,435 @@
+/* Enhanced Cyberpunk Theme with Neon Glow */
+:root {
+    --bg-primary: #0a0a1f;
+    --bg-secondary: #1a1a3a;
+    --bg-tertiary: #252550;
+    --text-primary: #ffffff;
+    --text-secondary: #8a8aa0;
+    --accent-x: #ff3c6f;
+    --accent-o: #3cffed;
+    --accent-neutral: #7f3cff;
+    --glow-x: rgba(255, 60, 111, 0.6);
+    --glow-o: rgba(60, 255, 237, 0.6);
+    --glow-neutral: rgba(127, 60, 255, 0.6);
+    --border-color: rgba(127, 60, 255, 0.3);
+}
+
+/* Base styles for body and container */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    touch-action: manipulation;
+}
+
+.app-container {
+    width: 100%;
+    height: 100vh;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: 600px;
+    padding: 2rem;
+    background: var(--bg-secondary);
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(127, 60, 255, 0.2);
+}
+
+.screen.active {
+    display: flex;
+}
+
+.game-title {
+    font-size: clamp(1.8rem, 6vw, 3rem);
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: min(1rem, 2vh);
+    text-shadow: 0 0 20px var(--glow-neutral);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.mode-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: 300px;
+}
+
+.game-button {
+    width: 100%;
+    padding: clamp(0.6rem, 2vh, 1rem) clamp(1rem, 3vw, 2rem);
+    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.game-button:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-neutral);
+    box-shadow: 0 0 15px var(--glow-neutral);
+}
+
+.game-button:active {
+    transform: translateY(1px);
+}
+
+.back-button {
+    background: transparent;
+    border-color: var(--text-secondary);
+}
+
+#game-screen {
+    max-width: none;
+    padding: 1.5rem;
+    gap: 1.5rem;
+}
+
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: min(10px, 2vw);
+    margin: 1rem auto;
+    width: min(75vw, 75vh, 400px);
+    aspect-ratio: 1;
+}
+
+.game-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    width: min(75vw, 75vh, 400px);
+    margin: 1rem auto;
+}
+
+.cell {
+    background: var(--bg-tertiary);
+    border: min(2px, 0.5vw) solid var(--border-color);
+    border-radius: min(8px, 2vw);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: clamp(2.5rem, 20vw, 5rem);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    aspect-ratio: 1;
+}
+
+.cell:hover {
+    border-color: var(--accent-neutral);
+    box-shadow: 0 0 15px var(--glow-neutral);
+}
+
+.cell.x {
+    color: var(--accent-x);
+    text-shadow: 0 0 10px var(--glow-x);
+}
+
+.cell.o {
+    color: var(--accent-o);
+    text-shadow: 0 0 10px var(--glow-o);
+}
+
+.game-header {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.game-mode {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.game-status {
+    font-size: 1.5rem;
+    color: var(--accent-neutral);
+    text-shadow: 0 0 10px var(--glow-neutral);
+}
+
+/* Online Game Styles */
+.room-info {
+    text-align: center;
+    background: var(--bg-tertiary);
+    padding: min(2rem, 4vh);
+    border-radius: 12px;
+    border: 2px solid var(--border-color);
+    width: min(90%, 300px);
+    margin: min(1rem, 2vh) auto;
+}
+
+.room-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--accent-neutral);
+    text-shadow: 0 0 10px var(--glow-neutral);
+}
+
+.room-code-display {
+    background: var(--bg-primary);
+    padding: min(1rem, 2vh);
+    border-radius: 8px;
+    border: 2px solid var(--accent-neutral);
+    box-shadow: 0 0 15px var(--glow-neutral);
+}
+
+.room-code-display .code-label {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.room-code-display .code {
+    font-weight: bold;
+    font-size: clamp(1.2rem, 4vw, 1.8rem);
+    color: var(--accent-neutral);
+    text-shadow: 0 0 10px var(--glow-neutral);
+    letter-spacing: 2px;
+}
+
+.mode-buttons .waiting-text {
+    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+    margin: min(1rem, 2vh) 0;
+    text-align: center;
+    animation: pulse 2s infinite;
+}
+
+.room-input {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.2rem;
+    background: var(--bg-tertiary);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.room-input:focus {
+    outline: none;
+    border-color: var(--accent-neutral);
+    box-shadow: 0 0 15px var(--glow-neutral);
+}
+
+.room-status {
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 1rem;
+    color: var(--accent-neutral);
+    font-size: 1.1rem;
+    text-shadow: 0 0 10px var(--glow-neutral);
+    min-height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 31, 0.9);
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--bg-secondary);
+    padding: 2rem;
+    border-radius: 15px;
+    border: 2px solid var(--accent-neutral);
+    box-shadow: 0 0 30px var(--glow-neutral);
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+.modal-content h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+    text-shadow: 0 0 10px var(--glow-neutral);
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -40%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Winning Animation Styles */
+.cell.winning {
+    animation: winningCell 1.5s ease-in-out;
+    z-index: 2;
+}
+
+@keyframes winningCell {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 10px var(--glow-neutral);
+    }
+    50% {
+        transform: scale(1.2);
+        box-shadow: 
+            0 0 20px var(--glow-neutral),
+            0 0 40px var(--glow-neutral),
+            0 0 60px var(--glow-neutral);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 10px var(--glow-neutral);
+    }
+}
+
+.cell.x.winning {
+    box-shadow: 0 0 20px var(--glow-x);
+}
+
+.cell.o.winning {
+    box-shadow: 0 0 20px var(--glow-o);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes modalIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px var(--glow-neutral); }
+    to { text-shadow: 0 0 20px var(--glow-neutral), 0 0 30px var(--glow-neutral); }
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .app-container {
+        padding: 10px;
+    }
+
+    .screen {
+        padding: 1rem;
+        gap: 1.5rem;
+        height: 100%;
+        justify-content: center;
+    }
+
+    .game-title {
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .mode-buttons {
+        width: 90%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .game-board {
+        width: 95vmin;
+        margin: 0.5rem auto;
+    }
+
+    .game-controls {
+        width: 95vmin;
+    }
+
+    .cell {
+        font-size: 3.5rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .app-container {
+        padding: 5px;
+    }
+
+    .game-title {
+        font-size: 2rem;
+    }
+
+    .game-button {
+        padding: 0.7rem 1rem;
+        font-size: 0.9rem;
+        min-width: 130px;
+    }
+
+    .cell {
+        font-size: 1.8rem;
+    }
+}
+
+/* Prevent pull-to-refresh on mobile */
+@media (pointer: coarse) {
+    body {
+        overscroll-behavior: none;
+    }
+}
+
+/* Prevent text selection */
+.game-button, .cell, .game-title, .room-code-display {
+    user-select: none;
+    -webkit-user-select: none;
+}
